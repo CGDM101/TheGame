@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace TheGame
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -14,8 +15,16 @@ namespace TheGame
         {
             Welcome();
             Player o = EnterName();
+            List<Player> allPlayers = CreateListOfPlayers(o);
             int userChoice = SelectionMenu();
             UserChoiceHandled(userChoice);
+        }
+
+        private static List<Player> CreateListOfPlayers(Player x)
+        {
+            List<Player> list = new List<Player>();
+            list.Add(x);
+            return list;
         }
 
         private static int SelectionMenu()
@@ -36,7 +45,7 @@ namespace TheGame
                     GoAdventuring();
                     break;
                 case 2:
-                    ShowDetailsAboutYourCharacter();
+                    //ShowDetailsAboutYourCharacter();
                     break;
                 case 3:
                     ExitMessage();                    
@@ -75,9 +84,12 @@ namespace TheGame
             Console.WriteLine("Sad to see you leave but you are welcome back!");
         }
 
-        private static void ShowDetailsAboutYourCharacter()
+        private static void ShowDetailsAboutYourCharacter(List<Player> lst)
         {
-            throw new NotImplementedException();
+            foreach (var item in lst) // List is not set to a reference
+            {
+                Console.WriteLine(item.Name);
+            }
         }
 
         private static void GoAdventuring()
@@ -92,7 +104,7 @@ namespace TheGame
             string userInput = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Gray;
             Player p = new Player { Name = userInput };
-            return p;
+            return p; // Denna ska gå in i listan
         }
 
         private static void Welcome()

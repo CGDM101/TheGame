@@ -104,12 +104,35 @@ namespace TheGame
             else if (outcome != 1)
             {
                 Console.WriteLine("inget hände");
+                // fortsätt spelet.
             }
         }
 
         private static void BattleBegins()
         {
-            Console.WriteLine("Game begins");
+            // Varannan gång:
+            HitMonster();
+            MonsterHitsPlayer();
+        }
+
+        public static void GameOver()
+        {
+            // Om någon av dem dör.
+        }
+        private static void MonsterHitsPlayer()
+        {
+            Console.WriteLine("You hit the monster, dealing 1 damage");
+            Console.WriteLine("Player Hp: ");
+            // Hp minskar?
+        }
+
+        private static void HitMonster()
+        {
+            Console.WriteLine("You hit the monster, dealing 1 damage.");
+            Console.WriteLine("Monster Hp:");
+            // MOnster-Hp minskar.
+            // Level ökar med 1 för varje vinst.
+
         }
 
         private static Player EnterName()

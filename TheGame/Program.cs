@@ -94,7 +94,22 @@ namespace TheGame
 
         private static void GoAdventuring()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            int outcome = rnd.Next(1, 11);
+            if (outcome == 1)
+            {
+                Console.WriteLine("Jäklar");
+                BattleBegins();
+            }
+            else if (outcome != 1)
+            {
+                Console.WriteLine("inget hände");
+            }
+        }
+
+        private static void BattleBegins()
+        {
+            Console.WriteLine("Game begins");
         }
 
         private static Player EnterName()

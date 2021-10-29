@@ -14,18 +14,21 @@ namespace TheGame
         public static void Menu()
         {
             Welcome();
-            Player o = EnterName();
-            List<Player> allPlayers = CreateListOfPlayers(o);
+            List<Player> allPlayers = CreatePlayerAndAddToList();
+            //Player o = CreatePlayerAndAddToList();
+            //List<Player> allPlayers = CreateListOfPlayers(o);
             int userChoice = SelectionMenu();
-            UserChoiceHandled(userChoice);
+            UserChoiceHandled(userChoice, allPlayers);
         }
 
+        #region obsolete
         private static List<Player> CreateListOfPlayers(Player x)
         {
             List<Player> list = new List<Player>();
             list.Add(x);
             return list;
         }
+        #endregion
 
         private static int SelectionMenu()
         {
@@ -37,7 +40,7 @@ namespace TheGame
             return userChoice;
         }
 
-        private static void UserChoiceHandled(int userChoice)
+        private static void UserChoiceHandled(int userChoice, List<Player> l)
         {
             switch (userChoice)
             {
@@ -45,7 +48,7 @@ namespace TheGame
                     GoAdventuring();
                     break;
                 case 2:
-                    //ShowDetailsAboutYourCharacter();
+                    ShowDetailsAboutYourCharacter(l);
                     break;
                 case 3:
                     ExitMessage();                    
@@ -86,16 +89,19 @@ namespace TheGame
 
         private static void ShowDetailsAboutYourCharacter(List<Player> lst)
         {
-            foreach (var item in lst) // List is not set to a reference
+            foreach (var item in lst)
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine("Name: " + item.Name);
+                Console.WriteLine("Hp: " + item.Hp);
+                Console.WriteLine("Level: " + item.Level);
+                Console.WriteLine("Xp: " + item.Xp);
             }
         }
 
         private static void GoAdventuring()
         {
             Random rnd = new Random();
-            int outcome = rnd.Next(1, 11);
+            int outcome = rnd.Next(1, 3); // 11
             if (outcome == 1)
             {
                 Console.WriteLine("Jäklar");
@@ -111,8 +117,18 @@ namespace TheGame
         private static void BattleBegins()
         {
             // Varannan gång:
-            HitMonster();
-            MonsterHitsPlayer();
+            int[] arr = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] % i == 0) // Divide by zero exc
+                {
+                    HitMonster();
+                }
+                else if (arr[i] % i != 0)
+                {
+                    MonsterHitsPlayer();
+                }
+            }
         }
 
         public static void GameOver()
@@ -135,14 +151,16 @@ namespace TheGame
 
         }
 
-        private static Player EnterName()
+        private static List<Player> CreatePlayerAndAddToList() // EnterName() earlier.
         {
             Console.Write("Enter your name: ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             string userInput = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Gray;
             Player p = new Player { Name = userInput };
-            return p; // Denna ska gå in i listan
+            List<Player> list = new List<Player>();
+            list.Add(p);
+            return list;
         }
 
         private static void Welcome()

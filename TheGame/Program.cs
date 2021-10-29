@@ -9,6 +9,7 @@ namespace TheGame
         static void Main(string[] args)
         {
             Menu();
+            // Game x = new Game();
         }
 
         public static void Menu()
@@ -124,14 +125,10 @@ namespace TheGame
             }
             else if(chance == 2)
             {
-                HitMonster();
+                HitMonster();              
             }
         }
 
-        public static void GameOver()
-        {
-            Console.WriteLine("Någon dog");
-        }
         private static void MonsterHitsPlayer()
         {
             Console.WriteLine("The monster hit you, dealing 1 damage");
@@ -142,6 +139,11 @@ namespace TheGame
         {
             Console.WriteLine("You hit the monster, dealing 1 damage.");
             Console.WriteLine("Monster Hp:");
+        }
+
+        public static void GameOver()
+        {
+            Console.WriteLine("Någon dog");
         }
 
         private static List<Player> CreatePlayerAndAddToList() // EnterName() earlier.

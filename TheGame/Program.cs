@@ -101,7 +101,7 @@ namespace TheGame
         private static void GoAdventuring()
         {
             Random rnd = new Random();
-            int outcome = rnd.Next(1, 3); // 11
+            int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller)
             if (outcome == 1)
             {
                 Console.WriteLine("Jäklar");
@@ -116,39 +116,32 @@ namespace TheGame
 
         private static void BattleBegins()
         {
-            // Varannan gång:
-            int[] arr = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            for (int i = 0; i < arr.Length; i++)
+            Random rnd = new Random();
+            int chance = rnd.Next(1, 3); // Varannan gång = 50%
+            if (chance == 1)
             {
-                if (arr[i] % i == 0) // Divide by zero exc
-                {
-                    HitMonster();
-                }
-                else if (arr[i] % i != 0)
-                {
-                    MonsterHitsPlayer();
-                }
+                MonsterHitsPlayer();
+            }
+            else if(chance == 2)
+            {
+                HitMonster();
             }
         }
 
         public static void GameOver()
         {
-            // Om någon av dem dör.
+            Console.WriteLine("Någon dog");
         }
         private static void MonsterHitsPlayer()
         {
-            Console.WriteLine("You hit the monster, dealing 1 damage");
+            Console.WriteLine("The monster hit you, dealing 1 damage");
             Console.WriteLine("Player Hp: ");
-            // Hp minskar?
         }
 
         private static void HitMonster()
         {
             Console.WriteLine("You hit the monster, dealing 1 damage.");
             Console.WriteLine("Monster Hp:");
-            // MOnster-Hp minskar.
-            // Level ökar med 1 för varje vinst.
-
         }
 
         private static List<Player> CreatePlayerAndAddToList() // EnterName() earlier.

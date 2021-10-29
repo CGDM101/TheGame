@@ -4,10 +4,17 @@ using System.Threading;
 
 namespace TheGame
 {
+    public class Game
+    {
+        public void GameMenu() { }
+    }
     public class Program
     {
         static void Main(string[] args)
         {
+            Game g = new Game();
+            g.GameMenu();
+
             Menu();
         }
 
@@ -118,30 +125,20 @@ namespace TheGame
         {
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
-            if (chance == 1)
+            if (chance == 1) // Hit player.
             {
-                MonsterHitsPlayer();
+                Player p = new Player();
+                p.Hp -= 1;
+
+                //HitPlayer();
             }
-            else if(chance == 2)
+            else if(chance == 2) // Hit monster.
             {
-                HitMonster();
+                Player p = new Player();
+                p.Hp += 1;
+                
+                //HitMonster();
             }
-        }
-
-        public static void GameOver()
-        {
-            Console.WriteLine("Någon dog");
-        }
-        private static void MonsterHitsPlayer()
-        {
-            Console.WriteLine("The monster hit you, dealing 1 damage");
-            Console.WriteLine("Player Hp: ");
-        }
-
-        private static void HitMonster()
-        {
-            Console.WriteLine("You hit the monster, dealing 1 damage.");
-            Console.WriteLine("Monster Hp:");
         }
 
         private static List<Player> CreatePlayerAndAddToList() // EnterName() earlier.
@@ -162,5 +159,11 @@ namespace TheGame
             Console.WriteLine("* Welcome to the game *");
             Console.WriteLine("***********************");
         }
+
+        public static void GameOver()
+        {
+            Console.WriteLine("Någon dog");
+        }
+
     }
 }

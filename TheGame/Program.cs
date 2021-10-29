@@ -115,27 +115,34 @@ namespace TheGame
             }
         }
 
-        private static void BattleBegins()
+        private static Game BattleBegins()
         {
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
             if (chance == 1)
             {
-                MonsterHitsPlayer();
+                Game g = MonsterHitsPlayer();
+                return g;
             }
             else if(chance == 2)
             {
-                HitMonster();              
+                Game gg = HitMonster();
+                return gg;
+            }
+            else
+            {
+                Game ggg = new Game();
+                return ggg;
             }
         }
 
-        private static void MonsterHitsPlayer()
+        private static Game MonsterHitsPlayer()
         {
             Console.WriteLine("The monster hit you, dealing 1 damage");
             Console.WriteLine("Player Hp: ");
         }
 
-        private static void HitMonster()
+        private static Game HitMonster()
         {
             Console.WriteLine("You hit the monster, dealing 1 damage.");
             Console.WriteLine("Monster Hp:");

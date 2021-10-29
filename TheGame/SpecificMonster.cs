@@ -2,7 +2,10 @@
 {
     public class SpecificMonster : Monster
     {
-        public int Xp { get; set; }
-        public int Hp { get; set; }
+        private int xp = 0;
+        private int hp = 10;
+
+        public int Xp { get => xp; set => xp = value; }
+        public int Hp { get => hp; set => hp = value; }
     }
 }

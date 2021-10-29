@@ -123,19 +123,24 @@ namespace TheGame
 
         private static void BattleBegins()
         {
+            Player p = new Player();
+            SpecificMonster m = new SpecificMonster();
+
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
             if (chance == 1) // Hit player.
             {
-                Player p = new Player();
+                // Om spelarens Hp är mer än 1:
                 p.Hp -= 1;
+                // Annrs dör spelaren.
 
                 //HitPlayer();
             }
             else if(chance == 2) // Hit monster.
             {
-                Player p = new Player();
+                // Om spelarens Ho mer än 1:
                 p.Hp += 1;
+                // Om hp blir 10, öka level till 2?
                 
                 //HitMonster();
             }

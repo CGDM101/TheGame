@@ -111,7 +111,8 @@ namespace TheGame
             int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller)
             if (outcome == 1)
             {
-                Console.WriteLine("Jäklar");
+                Console.WriteLine("Jäklar - du mötte monstret!");
+                Thread.Sleep(300);
                 BattleBegins();
             }
             else if (outcome != 1)
@@ -130,18 +131,26 @@ namespace TheGame
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
             if (chance == 1) // Hit player.
             {
-                // Om spelarens Hp är mer än 1:
                 p.Hp -= 1;
-                // Annrs dör spelaren.
+                p.Xp += 1;
+
+                Console.WriteLine("Attans - Monstret slog dig!");
+                Console.WriteLine("Du förlorade en Hp och har nu " + p.Hp + " Hp. Akta dig så du inte hamnar på 0 och dör!");
+                Console.WriteLine("Din Xp: " + p.Xp);
+                // En runda till så länge ingen når 0.
 
                 //HitPlayer();
             }
-            else if(chance == 2) // Hit monster.
+            else if (chance == 2) // Hit monster.
             {
-                // Om spelarens Ho mer än 1:
+                // TODO: Om spelarens Ho mer än 1:
+                Console.WriteLine("Du slog monstret - bra!");
                 p.Hp += 1;
-                // Om hp blir 10, öka level till 2?
-                
+                m.Xp += 1;
+                Console.WriteLine("Din Hp är nu " + p.Hp + " Hp. Kämpa på till 20 så kommer du till level 2!");
+                Console.WriteLine("Monstrets Xp: " + m.Xp);
+                // En runda till så länge ingen når 0.
+
                 //HitMonster();
             }
         }

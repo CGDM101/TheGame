@@ -10,6 +10,7 @@ namespace TheGame
     }
     public class Program
     {
+        // För varje monster man dödar får man experience points. När man når level 10 avslutas spelet.
         static void Main(string[] args)
         {
             Game g = new Game();
@@ -108,17 +109,18 @@ namespace TheGame
         private static void GoAdventuring() // while?
         {
             Random rnd = new Random();
-            int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller)
+            int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller och spelet börjar)
             if (outcome == 1)
             {
                 Console.WriteLine("Jäklar - du mötte monstret!");
+                Console.WriteLine();
                 Thread.Sleep(300);
                 BattleBegins();
             }
-            else if (outcome != 1)
+            else if (outcome != 1) // 90 % chans
             {
                 Console.WriteLine("inget hände");
-                // fortsätt spelet.
+                // TODO: fortsätt spelet.
             }
         }
 
@@ -136,11 +138,7 @@ namespace TheGame
                 {
                     Console.WriteLine("Attans - Monstret slog dig!");
                     p.Hp -= 1;
-                    p.Xp += 1;
-                    m.Xp += 1;
                     Console.WriteLine("Du förlorade en Hp och har nu " + p.Hp + " Hp.");
-                    Console.WriteLine("Din Xp: " + p.Xp);
-                    Console.WriteLine("Monstrets Xp: " + m.Xp);
                     Console.WriteLine();
 
                     if (p.Hp == 0)
@@ -158,17 +156,18 @@ namespace TheGame
                 {
                     Console.WriteLine("Du slog monstret - bra!");
                     p.Hp += 1;
-                    p.Xp += 1;
-                    m.Xp += 1;
+                    m.Hp -= 1;
                     Console.WriteLine("Din Hp är nu " + p.Hp + " Hp. Kämpa på!");
-                    Console.WriteLine("Din Xp: " + p.Xp);
-                    Console.WriteLine("Monstrets Xp: " + m.Xp);
+                    Console.WriteLine("Monstrets Hp är nu: " + m.Hp + " Hp. Slå han mer!");
                     Console.WriteLine();
 
-                    if (p.Hp == 20)
+                    if (m.Hp == 0)
                     {
-                        Console.WriteLine("Du nådde level 2!");
-                        break; // Spelet bryts, ska fortstta.
+                        p.Xp += 1; // Spaleren får en xp när monster dör.
+                        Console.WriteLine("Du får 1 Xp eftersom du dödade monstret.");
+                        p.Level += 1;
+                        Console.WriteLine("Du nådde level: " + p.Level);
+                        break; // Spelet bryts, ska fortstta. TODO.
                         //LevelUp(); ??
                     }
 
@@ -198,7 +197,7 @@ namespace TheGame
 
         public static void GameOver()
         {
-            Console.WriteLine("Du dog.");
+            Console.WriteLine("Du dog. Spelet är slut.");
         }
     }
 }

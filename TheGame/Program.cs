@@ -129,29 +129,43 @@ namespace TheGame
 
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
-            if (chance == 1) // Hit player.
+            while (p.Hp > 0 && m.Hp > 0)
             {
-                p.Hp -= 1;
-                p.Xp += 1;
+                if (chance == 1) // Hit player.
+                {
+                    Console.WriteLine("Attans - Monstret slog dig!");
+                    p.Hp -= 1;
+                    p.Xp += 1;
+                    Console.WriteLine("Du förlorade en Hp och har nu " + p.Hp + " Hp.");
+                    Console.WriteLine("Din Xp: " + p.Xp);
+                    Console.WriteLine("Monstrets Xp: " + m.Xp);
+                    Console.WriteLine();
 
-                Console.WriteLine("Attans - Monstret slog dig!");
-                Console.WriteLine("Du förlorade en Hp och har nu " + p.Hp + " Hp. Akta dig så du inte hamnar på 0 och dör!");
-                Console.WriteLine("Din Xp: " + p.Xp);
-                // En runda till så länge ingen når 0.
+                    if (p.Hp == 0)
+                    {
+                        GameOver(); // Spelaren dör.
+                    }
 
-                //HitPlayer();
-            }
-            else if (chance == 2) // Hit monster.
-            {
-                // TODO: Om spelarens Ho mer än 1:
-                Console.WriteLine("Du slog monstret - bra!");
-                p.Hp += 1;
-                m.Xp += 1;
-                Console.WriteLine("Din Hp är nu " + p.Hp + " Hp. Kämpa på till 20 så kommer du till level 2!");
-                Console.WriteLine("Monstrets Xp: " + m.Xp);
-                // En runda till så länge ingen når 0.
+                    //HitPlayer();
+                }
+                else if (chance == 2) // Hit monster.
+                {
+                    Console.WriteLine("Du slog monstret - bra!");
+                    p.Hp += 1;
+                    m.Xp += 1;
+                    Console.WriteLine("Din Hp är nu " + p.Hp + " Hp. Kämpa på!");
+                    Console.WriteLine("Monstrets Xp: " + m.Xp);
+                    Console.WriteLine();
 
-                //HitMonster();
+                    if (p.Hp == 20)
+                    {
+                        Console.WriteLine("Du nådde level 2!");
+                        break; // Speletes brtys, ska fortsätta.
+                        //LevelUp(); ??
+                    }
+
+                    //HitMonster();
+                }
             }
         }
 
@@ -176,7 +190,7 @@ namespace TheGame
 
         public static void GameOver()
         {
-            Console.WriteLine("Någon dog");
+            Console.WriteLine("Du dog.");
         }
 
     }

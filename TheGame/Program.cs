@@ -58,7 +58,7 @@ namespace TheGame
                     ShowDetailsAboutYourCharacter(l);
                     break;
                 case 3:
-                    ExitMessage();                    
+                    ExitMessage();
                     break;
                 default:
                     Console.WriteLine("Choose option 1, 2 or 3!");
@@ -68,7 +68,7 @@ namespace TheGame
 
         private static void ExitMessage()
         {
-            string[] smileyArray = new string[10] { ":'( ", ":'( " , ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", };
+            string[] smileyArray = new string[10] { ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", ":'( ", };
             //ConsoleColor[] colourArray = new ConsoleColor[2] { ConsoleColor.Red, ConsoleColor.Blue };
             for (int i = 0; i < smileyArray.Length; i++)
             {
@@ -105,7 +105,7 @@ namespace TheGame
             }
         }
 
-        private static void GoAdventuring()
+        private static void GoAdventuring() // while?
         {
             Random rnd = new Random();
             int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller)
@@ -129,13 +129,15 @@ namespace TheGame
 
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
-            while (p.Hp > 0 && m.Hp > 0)
+
+            if (chance == 1) // Hit player.
             {
-                if (chance == 1) // Hit player.
+                while (p.Hp > 0 && m.Hp > 0)
                 {
                     Console.WriteLine("Attans - Monstret slog dig!");
                     p.Hp -= 1;
                     p.Xp += 1;
+                    m.Xp += 1;
                     Console.WriteLine("Du förlorade en Hp och har nu " + p.Hp + " Hp.");
                     Console.WriteLine("Din Xp: " + p.Xp);
                     Console.WriteLine("Monstrets Xp: " + m.Xp);
@@ -143,24 +145,30 @@ namespace TheGame
 
                     if (p.Hp == 0)
                     {
-                        GameOver(); // Spelaren dör.
+                        GameOver(); // spelaren dör.
                     }
-
-                    //HitPlayer();
                 }
-                else if (chance == 2) // Hit monster.
+            }
+
+            //HitPlayer();
+
+            else if (chance == 2) // Hit monster.
+            {
+                while (p.Hp > 0 && m.Hp > 0)
                 {
                     Console.WriteLine("Du slog monstret - bra!");
                     p.Hp += 1;
+                    p.Xp += 1;
                     m.Xp += 1;
                     Console.WriteLine("Din Hp är nu " + p.Hp + " Hp. Kämpa på!");
+                    Console.WriteLine("Din Xp: " + p.Xp);
                     Console.WriteLine("Monstrets Xp: " + m.Xp);
                     Console.WriteLine();
 
                     if (p.Hp == 20)
                     {
                         Console.WriteLine("Du nådde level 2!");
-                        break; // Speletes brtys, ska fortsätta.
+                        break; // Spelet bryts, ska fortstta.
                         //LevelUp(); ??
                     }
 
@@ -192,6 +200,6 @@ namespace TheGame
         {
             Console.WriteLine("Du dog.");
         }
-
     }
 }
+

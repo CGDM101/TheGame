@@ -4,52 +4,20 @@ using System.Threading;
 
 namespace TheGame
 {
-    public class Game  // ?
-    {
-        //public void GameOver()
-        //{
-        //    Console.WriteLine("Du dog. Spelet är slut.");
-        //}
-        public void GameMenu()
-        {
-            // ?   
-        }
-    }
     public class Program
     {   
         // För varje monster man dödar får man experience points. När man når level 10 avslutas spelet.
         static void Main(string[] args)
         {
-            // Saker som har med Game-klassen att göraQ.
-            Game g = new Game();
-            g.GameMenu();
-
-            Monster m1 = new Monster { Name = "m1" };
-            SpecificMonster sm1 = new SpecificMonster { Name = "sp1", Hp = 101, Xp = 0 };
-            List<Monster> monsterList = new List<Monster> { m1, sm1 };
-            //
-
-
             Menu();
         }
         public static void Menu()
         {
             Welcome();
             List<Player> allPlayers = CreatePlayerAndAddToList();
-            //Player o = CreatePlayerAndAddToList();
-            //List<Player> allPlayers = CreateListOfPlayers(o);
             int userChoice = SelectionMenu();               
             UserChoiceHandled(userChoice, allPlayers);
         }
-
-        #region obsolete
-        private static List<Player> CreateListOfPlayers(Player x)
-        {
-            List<Player> list = new List<Player>();
-            list.Add(x);
-            return list;
-        }
-        #endregion
 
         private static int SelectionMenu()
         {
@@ -66,7 +34,7 @@ namespace TheGame
             switch (userChoice)
             {
                 case 1:
-                    GoAdventuring();  // TODO: Till spelaren dör eller når level 10.
+                    GoAdventuring();  // Tills spelaren dör eller når level 10.
                     break;
                 case 2:
                     ShowDetailsAboutYourCharacter(l);
@@ -117,6 +85,8 @@ namespace TheGame
                 Console.WriteLine("Level: " + item.Level);
                 Console.WriteLine("Xp: " + item.Xp);
             }
+            Menu(); // TODO: De ska inte behöva skriva in namn en gång till.
+
         }
 
         private static void GoAdventuring() // WIP
@@ -232,7 +202,7 @@ namespace TheGame
             }
         }
 
-        private static List<Player> CreatePlayerAndAddToList() // EnterName() earlier.
+        private static List<Player> CreatePlayerAndAddToList() // Enter name earlier.
         {
             Console.Write("Enter your name: ");
             Console.ForegroundColor = ConsoleColor.Cyan;

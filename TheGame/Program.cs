@@ -4,28 +4,41 @@ using System.Threading;
 
 namespace TheGame
 {
-    public class Game
+    public class Game  // ?
     {
-        public void GameMenu() { }
+        //public void GameOver()
+        //{
+        //    Console.WriteLine("Du dog. Spelet är slut.");
+        //}
+        public void GameMenu()
+        {
+            // ?   
+        }
     }
     public class Program
-    {
+    {   
         // För varje monster man dödar får man experience points. När man når level 10 avslutas spelet.
         static void Main(string[] args)
         {
+            // Saker som har med Game-klassen att göraQ.
             Game g = new Game();
             g.GameMenu();
 
+            Monster m1 = new Monster { Name = "m1" };
+            SpecificMonster sm1 = new SpecificMonster { Name = "sp1", Hp = 101, Xp = 0 };
+            List<Monster> monsterList = new List<Monster> { m1, sm1 };
+            //
+
+
             Menu();
         }
-
         public static void Menu()
         {
             Welcome();
             List<Player> allPlayers = CreatePlayerAndAddToList();
             //Player o = CreatePlayerAndAddToList();
             //List<Player> allPlayers = CreateListOfPlayers(o);
-            int userChoice = SelectionMenu();
+            int userChoice = SelectionMenu();               
             UserChoiceHandled(userChoice, allPlayers);
         }
 
@@ -53,7 +66,7 @@ namespace TheGame
             switch (userChoice)
             {
                 case 1:
-                    GoAdventuring();
+                    GoAdventuring();  // TODO: Till spelaren dör eller når level 10.
                     break;
                 case 2:
                     ShowDetailsAboutYourCharacter(l);
@@ -106,31 +119,63 @@ namespace TheGame
             }
         }
 
-        private static void GoAdventuring() // while?
+        private static void GoAdventuring() // WIP
         {
             Random rnd = new Random();
-            int outcome = rnd.Next(1, 3); // 11 (10% chans monstret anfaller och spelet börjar)
+            int outcome = rnd.Next(1, 3); // ÄNDRA TILL 11 SEDAN! (10% chans monstret anfaller och spelet börjar)
             if (outcome == 1)
             {
-                Console.WriteLine("Jäklar - du mötte monstret!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Jäklar!"); Thread.Sleep(750);
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+                Console.WriteLine(" - Du mötte monstret!"); // TODO: Vilket av dem?
                 Console.WriteLine();
                 Thread.Sleep(300);
-                BattleBegins();
+                BattleBegins(); // ============================= BATTLE BEGINS ==================================== >
+
             }
             else if (outcome != 1) // 90 % chans
             {
-                Console.WriteLine("inget hände");
-                // TODO: fortsätt spelet.
+                Console.WriteLine("Inget hände, lugnt och skönt i skogen.");
+                Thread.Sleep(750);
+                Console.WriteLine("Nu går vi vidare in i skogen!");
+                Thread.Sleep(750);
+                GoAdventuring(); // Fortsätter tills outcome blir 1.
             }
         }
 
-        private static void BattleBegins()
+        private static void BattleBegins()  // WIP:  ========================================================
         {
             Player p = new Player();
+
+            // =========================================== WIP: =============================================
             SpecificMonster m = new SpecificMonster();
+            SpecificMonster n = new SpecificMonster();
+            SpecificMonster o = new SpecificMonster();
+            List<SpecificMonster> monsters = new List<SpecificMonster> { m, n, o };
+            Random monsterGenerator = new Random();
+            int monster = monsterGenerator.Next(1, 4);
+            switch (monster)
+            {
+                case 1:
+                    // m kommer mot spelaren.
+                    break;
+                case 2:
+                    // n kommer mot spelaren.
+                    break;
+                case 3:
+                    // o kommer mot spelaren.
+                    break;
+                default:
+                    Console.WriteLine("Något gick fel?");
+                    break;
+            } // ===========================================================================================
+
 
             Random rnd = new Random();
             int chance = rnd.Next(1, 3); // Varannan gång = 50%
+
 
             if (chance == 1) // Hit player.
             {
@@ -143,7 +188,10 @@ namespace TheGame
 
                     if (p.Hp == 0)
                     {
-                        GameOver(); // spelaren dör.
+                        //Game g = new Game();
+                        //g.GameOver();
+
+                        GameOver(); // statisk metod.
                     }
                 }
             }
@@ -167,10 +215,18 @@ namespace TheGame
                         Console.WriteLine("Du får 1 Xp eftersom du dödade monstret.");
                         p.Level += 1;
                         Console.WriteLine("Du nådde level: " + p.Level);
-                        break; // Spelet bryts, ska fortstta. TODO.
+
+                        // TDOD: LEVEL++ TILLS == 10, ==========================================================
+                        // TODO: player hp, xp och LEVEL ska finnas kvar i omgång två ==========================
+                        GoAdventuring();
+                        if (p.Level == 10 || p.Hp == 0)
+                        {
+                            break; // Spelet slutar om spelaren dör eller når level 10.
+                        }
+                        // =====================================================================================
+
                         //LevelUp(); ??
                     }
-
                     //HitMonster();
                 }
             }
@@ -194,11 +250,11 @@ namespace TheGame
             Console.WriteLine("* Welcome to the game *");
             Console.WriteLine("***********************");
         }
-
         public static void GameOver()
         {
             Console.WriteLine("Du dog. Spelet är slut.");
         }
+
     }
 }
 
